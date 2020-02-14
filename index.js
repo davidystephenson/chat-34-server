@@ -8,4 +8,19 @@ function onListen () {
   console.log(`Listening on :${port}`)
 }
 
+const jsonMiddleware = express
+  .json()
+app.use(jsonMiddleware)
+
+app.post(
+  '/message',
+  function (request, response) {
+    const { body } = request
+
+    console
+      .log('request.body test:', body)
+  }
+)
+
+
 app.listen(port, onListen)
