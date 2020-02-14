@@ -13,8 +13,8 @@ router.get(
   '/stream',
   async (request, response, next) => {
     try {
-      const messages = await Message        .findAll()
-      console.log('messages test:', messages)
+      const messages = await Messag
+        .findAll()
 
       const json = JSON
         .stringify(messages)
@@ -33,7 +33,8 @@ router.get(
     request, response, next
   ) {
     try {
-      const messages = await Message        .findAll()
+      const messages = await Message
+        .findAll()
       
       response.send(messages)
     } catch (error) {
