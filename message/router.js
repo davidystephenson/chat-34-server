@@ -11,9 +11,19 @@ const router = Router()
 // get on the stream
 router.get(
   '/stream',
-  (request, response, next) => {
-    stream.updateInit('test')
-    stream.init(request, response)
+  async (request, response, next) => {
+    try {
+      const messages = await Message        .findAll()
+      console.log('messages test:', messages)
+
+      const json = JSON
+        .stringify(messages)
+
+      stream.updateInit(json)
+      stream.init(request, response)
+    } catch (error) {
+      next(error)
+    }
   }
 )
 
