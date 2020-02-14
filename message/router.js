@@ -54,6 +54,11 @@ router.post(
       const message = await Message
         .create(entity)
 
+      const json = JSON
+        .stringify(message)
+
+      stream.send(json)
+
       response.send(message)
     } catch (error) {
       next(error)
