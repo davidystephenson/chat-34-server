@@ -13,7 +13,7 @@ router.get(
   '/stream',
   async (request, response, next) => {
     try {
-      const messages = await Messag
+      const messages = await Message
         .findAll()
 
       const json = JSON
