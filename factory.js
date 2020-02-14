@@ -1,5 +1,7 @@
-function factory (stream) {
-  const user = { name: 'david' }
+const age = 1
+
+function notFactory (stream) {
+  const user = { name: 'david', age }
 
   return user
 }

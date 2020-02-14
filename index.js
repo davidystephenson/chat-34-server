@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const Sse = require('json-sse')
+const Message = require('./message/model')
 const messageFactory = require(
   './message/router'
 )
@@ -24,6 +25,31 @@ const jsonMiddleware = express
 app.use(jsonMiddleware)
 
 const stream = new Sse()
+
+// get on the stream
+app.get(
+  '/stream',
+  async (request, response, next) => {
+    try {
+      const messages = await Message
+        .findAll()
+
+      const action = {
+        type: 'ALL_MESSAGES',
+        payload: messages
+      }
+
+      const json = JSON
+        .stringify(action)
+
+      stream.updateInit(json)
+      stream.init(request, response)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
 
 const messageRouter = messageFactory(
   stream

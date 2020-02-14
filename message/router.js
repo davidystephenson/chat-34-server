@@ -6,30 +6,6 @@ function factory (stream) {
 
   const router = Router()
 
-  // get on the stream
-  router.get(
-    '/stream',
-    async (request, response, next) => {
-      try {
-        const messages = await Message
-          .findAll()
-
-        const action = {
-          type: 'ALL_MESSAGES',
-          payload: messages
-        }
-
-        const json = JSON
-          .stringify(action)
-
-        stream.updateInit(json)
-        stream.init(request, response)
-      } catch (error) {
-        next(error)
-      }
-    }
-  )
-
   router.post(
     '/message',
     async function (
