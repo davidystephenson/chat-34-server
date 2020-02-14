@@ -16,27 +16,16 @@ router.get(
       const messages = await Message
         .findAll()
 
+      const action = {
+        type: 'MESSAGES',
+        payload: messages
+      }
+
       const json = JSON
-        .stringify(messages)
+        .stringify(action)
 
       stream.updateInit(json)
       stream.init(request, response)
-    } catch (error) {
-      next(error)
-    }
-  }
-)
-
-router.get(
-  '/message',
-  async function (
-    request, response, next
-  ) {
-    try {
-      const messages = await Message
-        .findAll()
-      
-      response.send(messages)
     } catch (error) {
       next(error)
     }
@@ -55,8 +44,13 @@ router.post(
       const message = await Message
         .create(entity)
 
+      const action = {
+        type: 'MESSAGE',
+        payload: message
+      }
+
       const json = JSON
-        .stringify(message)
+        .stringify(action)
 
       stream.send(json)
 
