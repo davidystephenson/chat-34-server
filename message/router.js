@@ -14,10 +14,11 @@ router.post(
       const { body } = request
       const { text } = body
       const entity = { text }
-      const response = await Message
+      const message = await Message
         .create(entity)
 
-      console.log(response.dataValues)
+      console
+        .log(message.dataValues)
     } catch (error) {
       next(error)
     }
