@@ -1,9 +1,21 @@
 const express = require('express')
 const Message = require('./model')
+const Sse = require('json-sse')
 
 const { Router } = express
 
+const stream = new Sse()
+
 const router = Router()
+
+// get on the stream
+router.get(
+  '/stream',
+  (request, response, next) => {
+    stream.updateInit('test')
+    stream.init(request, response)
+  }
+)
 
 router.get(
   '/message',
