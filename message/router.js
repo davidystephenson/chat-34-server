@@ -1,5 +1,6 @@
 const express = require('express')
 const Message = require('./model')
+const Channel = require('../channel/model')
 
 function factory (stream) {
   const { Router } = express
@@ -13,14 +14,17 @@ function factory (stream) {
     ) {
       try {
         const { body } = request
-        const { text } = body
-        const entity = { text }
+        const { text, channelId } = body
+        const entity = { text, channelId }
         const message = await Message
           .create(entity)
 
+        const channels = await Channel
+          .findAll({ include: [Message] })
+
         const action = {
-          type: 'ONE_MESSAGE',
-          payload: message
+          type: 'ALL_CHANNELS',
+          payload: channels
         }
 
         const json = JSON

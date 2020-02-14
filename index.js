@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const Sse = require('json-sse')
+const Channel = require('./channel/model')
 const Message = require('./message/model')
 const messageFactory = require(
   './message/router'
@@ -31,12 +32,12 @@ app.get(
   '/stream',
   async (request, response, next) => {
     try {
-      const messages = await Message
-        .findAll()
+      const channels = await Channel
+        .findAll({ include: [Message] })
 
       const action = {
-        type: 'ALL_MESSAGES',
-        payload: messages
+        type: 'ALL_CHANNELS',
+        payload: channels
       }
 
       const json = JSON

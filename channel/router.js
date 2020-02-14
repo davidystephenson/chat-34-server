@@ -1,5 +1,6 @@
 const express = require('express')
 const Channel = require('./model')
+const Message = require('../message/model')
 
 function factory (stream) {
   const { Router } = express
@@ -16,8 +17,13 @@ function factory (stream) {
         console.log('body test:', body)
         const { name } = body
         const entity = { name }
-        const channel = await Channel
+        const ref = await Channel
           .create(entity)
+
+        const channel = await Channel
+          .findByPk(ref.id, {
+            include: [Message]
+          })
 
         const action = {
           type: 'ONE_CHANNEL',
