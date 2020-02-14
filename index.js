@@ -1,4 +1,7 @@
 const express = require('express')
+const messageRouter = require(
+  './message/router'
+)
 
 const app = express ()
 
@@ -12,15 +15,6 @@ const jsonMiddleware = express
   .json()
 app.use(jsonMiddleware)
 
-app.post(
-  '/message',
-  function (request, response) {
-    const { body } = request
-
-    console
-      .log('request.body test:', body)
-  }
-)
-
+app.use(messageRouter)
 
 app.listen(port, onListen)
