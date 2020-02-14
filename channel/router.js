@@ -1,5 +1,5 @@
 const express = require('express')
-const Message = require('./model')
+const Channel = require('./model')
 
 function factory (stream) {
   const { Router } = express
@@ -31,20 +31,21 @@ function factory (stream) {
   )
 
   router.post(
-    '/message',
+    '/channel',
     async function (
       request, response, next
     ) {
       try {
         const { body } = request
-        const { text } = body
-        const entity = { text }
-        const message = await Message
+        console.log('body test:', body)
+        const { name } = body
+        const entity = { name }
+        const channel = await Channel
           .create(entity)
 
         const action = {
-          type: 'ONE_MESSAGE',
-          payload: message
+          type: 'ONE_CHANNEL',
+          payload: channel
         }
 
         const json = JSON
@@ -52,7 +53,7 @@ function factory (stream) {
 
         stream.send(json)
 
-        response.send(message)
+        response.send(channel)
       } catch (error) {
         next(error)
       }

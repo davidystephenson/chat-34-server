@@ -1,7 +1,11 @@
 const express = require('express')
 const cors = require('cors')
-const messageRouter = require(
+const Sse = require('json-sse')
+const messageFactory = require(
   './message/router'
+)
+const channelFactory = require(
+  './channel/router'
 )
 
 const app = express ()
@@ -19,6 +23,14 @@ const jsonMiddleware = express
   .json()
 app.use(jsonMiddleware)
 
+const stream = new Sse()
+
+const messageRouter = messageFactory(
+  stream
+)
 app.use(messageRouter)
+
+const channelRouter = channelFactory(stream)
+app.use(channelRouter)
 
 app.listen(port, onListen)
