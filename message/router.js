@@ -17,8 +17,7 @@ router.post(
       const message = await Message
         .create(entity)
 
-      console
-        .log(message.dataValues)
+      response.send(message)
     } catch (error) {
       next(error)
     }
