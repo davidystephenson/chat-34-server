@@ -17,7 +17,7 @@ router.get(
         .findAll()
 
       const action = {
-        type: 'MESSAGES',
+        type: 'ALL_MESSAGES',
         payload: messages
       }
 
@@ -45,7 +45,7 @@ router.post(
         .create(entity)
 
       const action = {
-        type: 'MESSAGE',
+        type: 'ONE_MESSAGE',
         payload: message
       }
 
